@@ -1,0 +1,34 @@
+---
+- name: Install nvm dependencies
+  become: true
+  apt: 
+    name={{ item }}
+    update_cache=yes
+    state=latest
+  with_items:
+  - git
+  - curl
+  - build-essential
+  - libssl-dev
+
+- name: Install nvm
+  git:
+    repo: https://github.com/creationix/nvm.git
+    dest: ~/.nvm
+
+- name: Source nvm in ~/.zshrc
+  lineinfile:
+    path: ~/.zshrc
+    line: '{{ item }}'
+    insertafter: EOF
+  with_items:
+  - 'export NVM_DIR="$HOME/.nvm"'
+  - '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
+
+- name: Install {{ nvm.node_version }}
+  shell: export NVM_DIR="$HOME/.nvm" && . ~/.nvm/nvm.sh && nvm install {{ nvm.node_version }}
+  register: nvm_node_install
+
+- name: Set default node version to {{ nvm.node_version }}
+  shell: export NVM_DIR="$HOME/.nvm" && . ~/.nvm/nvm.sh && nvm alias default {{ nvm.node_version }}
+  when: nvm_node_install|success

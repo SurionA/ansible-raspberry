@@ -1,0 +1,13 @@
+- name: Install vim depedencies
+  become: true
+  apt:
+    update_cache=yes
+    state=latest
+    name=vim
+  register: vimInstallation
+
+- name: Configure vim
+  copy:
+    src: ../files/vimrc
+    dest: ~/.vimrc
+  when: vimInstallation|success

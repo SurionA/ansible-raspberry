@@ -1,0 +1,33 @@
+---
+- name: Install oh-my-zsh depedencies
+  become: true
+  apt:
+    name=zsh
+    state=latest
+    update_cache=yes
+  register: ohMyZshInstallation
+
+- name: Cloning oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: ~/.oh-my-zsh
+  when: ohMyZshInstallation|success
+  register: ohMyZshCloning
+
+- name: Configure ~/.zshrc
+  template:
+    src: ../templates/zshrc.zsh.j2
+    dest: ~/.zshrc
+  when: ohMyZshCloning|success
+  register: ohMyZshConfiguration
+
+- name: Copy honukai theme
+  copy:
+    src: ../files/honukai.zsh-theme
+    dest: ~/.oh-my-zsh/themes/honukai.zsh-theme
+  when: ohMyZshConfiguration|success
+  register: ohMyZshSetTheme
+
+- name: Change your default shell to OhMyZsh
+  user: name={{ansible_user}} shell=/bin/zsh
+  when: ohMyZshSetTheme|success

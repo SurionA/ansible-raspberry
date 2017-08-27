@@ -1,0 +1,17 @@
+- name: Install git depedencies
+  become: true
+  apt:
+    update_cache=yes
+    state=latest
+    name={{item}}
+  with_items:
+  - git
+  - git-core
+  register: gitInstallation
+
+- name: Configure git 
+  copy:
+    src: ../files/gitconfig
+    dest: ~/.gitconfig
+  when: gitInstallation|success
+ 

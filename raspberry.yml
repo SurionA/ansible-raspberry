@@ -1,0 +1,32 @@
+---
+- hosts: raspberry
+  remote_user: pi
+    
+  tasks:
+  - name: Import variables
+    include_vars: vars/raspberry_variables.yml
+ 
+  - name: Install common packages
+    become: true
+    apt: 
+      update_cache=yes
+      state=latest
+      name={{item}}
+    with_items: 
+    - curl
+    - htop
+    - ncdu
+    - pwgen
+    - strace
+    - sudo
+    - tar
+    - unzip
+    - wget
+    - whois
+    - screen
+
+
+  - include: roles/git/tasks/main.yml
+  - include: roles/ohmyzsh/tasks/main.yml
+  - include: roles/nvm/tasks/main.yml
+  - include: roles/wifi/tasks/main.yml

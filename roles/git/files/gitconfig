@@ -1,0 +1,8 @@
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lm = "!f() {local method=$1;local file=$2;[[ -n \"$method\" && -n \"$file\" ]] || exit 1;git log -L :$method:$file;}; f"
+[push]
+	default = simple
+[user]
+	name = SurionA
+	email = frere.maxime@gmail.com

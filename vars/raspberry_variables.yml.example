@@ -1,0 +1,9 @@
+---
+ansible_user: pi
+nvm:
+  node_version: node
+ohmyzsh:
+  theme: honukai
+wifi:
+  ssid: SSID
+  wep_key0: PASSWORD

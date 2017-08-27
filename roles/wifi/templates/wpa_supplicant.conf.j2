@@ -1,0 +1,11 @@
+country=FR
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+
+network={
+   ssid="{{wifi.ssid}}"
+   key_mgmt=NONE
+   wep_key0={{wifi.wep_key0}}
+   wep_tx_keyidx=0
+   priority=1
+}
