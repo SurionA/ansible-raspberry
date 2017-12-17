@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.env.osx": {
+        "PATH": "/Users/maximefrere/.platformio/penv/bin:/Users/maximefrere/Sites/tools/elasticsearch-2.4.1/bin/:/Users/maximefrere/Sites/tools/redis-3.2.4/src/:/Users/maximefrere/.nvm/versions/node/v8.4.0/bin:/usr/local/var/rbenv/shims:/Users/maximefrere/.rbenv/shims:/Users/maximefrere/.rbenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/maximefrere/.nvm/versions/node/v8.4.0/bin"
+    }
+}

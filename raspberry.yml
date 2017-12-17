@@ -24,9 +24,16 @@
     - wget
     - whois
     - screen
-
+    - python3-pip
+    - bash-completion
+    - python-pygments
+    - wireless-tools
+    - dnsutils
+    - net-tools
+    - lsof
 
   - include: roles/git/tasks/main.yml
   - include: roles/ohmyzsh/tasks/main.yml
   - include: roles/nvm/tasks/main.yml
   - include: roles/wifi/tasks/main.yml
+  - include: roles/vim/tasks/main.yml

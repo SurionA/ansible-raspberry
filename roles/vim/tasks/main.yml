@@ -10,4 +10,10 @@
   copy:
     src: ../files/vimrc
     dest: ~/.vimrc
+  register: vimConfiguration    
   when: vimInstallation|success
+
+- name: Install spacevim
+  shell: curl -sLf https://spacevim.org/install.sh | bash
+  when: vimConfiguration|success
+

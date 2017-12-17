@@ -2,9 +2,12 @@
 - name: Install oh-my-zsh depedencies
   become: true
   apt:
-    name=zsh
+    name={{item}}
     state=latest
     update_cache=yes
+  with_items:
+    - zsh
+    - zsh-syntax-highlighting
   register: ohMyZshInstallation
 
 - name: Cloning oh-my-zsh
@@ -14,11 +17,31 @@
   when: ohMyZshInstallation|success
   register: ohMyZshCloning
 
+- name: Cloning nerd-fonts
+  git:
+    repo: https://github.com/ryanoasis/nerd-fonts.git
+    dest: /tmp/nerd-fonts
+    depth: 1
+  when: ohMyZshCloning|success
+  register: nerdFontsCloning
+
+- name: Install nerd-fonts
+  shell: cd /tmp/nerd-fonts && ./install.sh
+  when: nerdFontsCloning|success
+  register: nerdFontsInstall
+
+- name: Cloning powerlevel9k
+  git:
+    repo: https://github.com/bhilburn/powerlevel9k.git 
+    dest: ~/.oh-my-zsh/custom/themes/powerlevel9k
+  when: nerdFontsInstall|success
+  register: powerlevel9kCloning
+
 - name: Configure ~/.zshrc
   template:
     src: ../templates/zshrc.zsh.j2
     dest: ~/.zshrc
-  when: ohMyZshCloning|success
+  when: powerlevel9kCloning|success
   register: ohMyZshConfiguration
 
 - name: Copy honukai theme
@@ -28,6 +51,17 @@
   when: ohMyZshConfiguration|success
   register: ohMyZshSetTheme
 
+- name: Ensures ~/.oh-my-zsh/custom/themes/suriona directory exists
+  file: path=~/.oh-my-zsh/custom/themes/suriona state=directory
+
+- name: Copy suriona theme
+  copy:
+    src: ../files/suriona.zsh-theme
+    dest: ~/.oh-my-zsh/custom/themes/suriona/suriona.zsh-theme
+  when: ohMyZshConfiguration|success
+  register: ohMyZshSetTheme
+
 - name: Change your default shell to OhMyZsh
-  user: name={{ansible_user}} shell=/bin/zsh
+  become: true
+  shell : chsh {{ansible_user}} -s $(which zsh)  
   when: ohMyZshSetTheme|success
