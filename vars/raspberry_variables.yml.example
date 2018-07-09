@@ -4,6 +4,9 @@ nvm:
   node_version: node
 ohmyzsh:
   theme: honukai
+gitconfig:
+  name: username
+  email: user@exemple.com
 wifi:
   ssid: SSID
   wep_key0: PASSWORD

@@ -10,8 +10,8 @@
   register: gitInstallation
 
 - name: Configure git 
-  copy:
-    src: ../files/gitconfig
+  template:
+    src: ../templates/gitconfig.j2
     dest: ~/.gitconfig
   when: gitInstallation|success
  
