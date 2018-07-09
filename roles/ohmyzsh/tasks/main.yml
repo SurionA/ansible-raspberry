@@ -54,14 +54,19 @@
 - name: Ensures ~/.oh-my-zsh/custom/themes/suriona directory exists
   file: path=~/.oh-my-zsh/custom/themes/suriona state=directory
 
-- name: Copy suriona theme
-  copy:
-    src: ../files/suriona.zsh-theme
-    dest: ~/.oh-my-zsh/custom/themes/suriona/suriona.zsh-theme
+- name: Install spaceship theme
+  git:
+    repo: https://github.com/denysdovhan/spaceship-prompt.git
+    dest: ~/.oh-my-zsh/custom/themes/spaceship-prompt
   when: ohMyZshConfiguration|success
-  register: ohMyZshSetTheme
+  register: ohMyZshInstallSpaceshipTheme
+
+- name: Link {{ nvm.node_version }}
+  file: src=~/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme  dest=~/.oh-my-zsh/custom/themes/spaceship.zsh-theme state=link
+  when: ohMyZshInstallSpaceshipTheme|success
+  register: ohMyZshSetSpaceshipTheme
 
 - name: Change your default shell to OhMyZsh
   become: true
   shell : chsh {{ansible_user}} -s $(which zsh)  
-  when: ohMyZshSetTheme|success
+  when: ohMyZshSetSpaceshipTheme|success
