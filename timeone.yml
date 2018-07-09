@@ -1,10 +1,10 @@
 ---
-- hosts: raspberry
-  remote_user: pi
+- hosts: timeone
+  remote_user: mfrere
     
   tasks:
   - name: Import variables
-    include_vars: vars/raspberry_variables.yml
+    include_vars: vars/timeone_variables.yml
  
   - name: Install common packages
     become: true
@@ -34,7 +34,6 @@
 
   - include: roles/git/tasks/main.yml
   - include: roles/ohmyzsh/tasks/main.yml
-  - include: roles/nvm/tasks/main.yml
-  - include: roles/wifi/tasks/main.yml
   - include: roles/vim/tasks/main.yml
   - include: roles/fonts/tasks/main.yml
+  - include: roles/nvm/tasks/main.yml
