@@ -7,6 +7,7 @@ This playbook bootstraps raspbian:
 - Install and configure a version control system  with [git](https://git-scm.com/).
 - Install and configure [oh-my-zs](https://github.com/robbyrussell/oh-my-zsh).
 - Install and configure node with [nvm](https://github.com/creationix/nvm).
+- Download [Inconsolata font](https://fonts.google.com/specimen/Inconsolata)
 - Configure wifi.
 
 Role Variables
@@ -24,6 +25,10 @@ Role Variables
 
 - `ssid`: WIFI network name
 - `wep_key0`: WIFI network password
+
+### gitconfig:
+  `name`: git username
+  `email`: git email
 
 Dependencies
 ------------
