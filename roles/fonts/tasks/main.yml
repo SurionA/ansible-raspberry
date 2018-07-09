@@ -1,0 +1,6 @@
+- name: Install fonts depedencies
+  copy:
+    src: ../files/Inconsolata
+    dest: ~/Téléchargements
+  when: gitInstallation|success
+ 

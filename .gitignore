@@ -1,6 +1,7 @@
 .vagrant*
 *.swp
 *.retry
+.DS_Store
 
 hosts
 vars/*.yml
